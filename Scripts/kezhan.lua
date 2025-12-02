@@ -13,59 +13,13 @@ local LunHui = {}
 
 -- 模组初始化函数
 function KeZhan:OnInit()
-    -- 添加重置按钮到游戏界面
-    self:AddResetButton()
+    -- 初始化代码（已删除重置按钮相关功能）
 end
 
 -- 进入游戏时执行的函数
 function KeZhan:OnEnter()
     -- 注册秘境更新事件，当秘境更新时调用KeZhan.OnSecretUpdate函数
     tbEvent:RegisterEvent(g_emEvent.SecretUpdate, KeZhan.OnSecretUpdate, "KeZhan")
-    -- 确保重置按钮存在
-    self:AddResetButton()
-end
-
--- 添加重置按钮到游戏界面
-function KeZhan:AddResetButton()
-    -- 检查是否已经存在重置按钮，避免重复创建
-    if self.resetButton then
-        return
-    end
-    
-    -- 创建重置按钮（这里假设使用游戏内的UI创建方法）
-    -- 具体实现可能需要根据游戏的UI系统进行调整
-    self.resetButton = CS.XiaWorld.UI.Button:new()
-    self.resetButton.Text = "重置已标记NPC"
-    self.resetButton.Size = Vector2(120, 30)
-    self.resetButton.Position = Vector2(10, 100)  -- 屏幕左上角位置
-    
-    -- 绑定点击事件
-    self.resetButton:AddClickEvent(function()
-        self:ResetMarkedNPCs()
-    end)
-    
-    -- 将按钮添加到游戏界面
-    -- 具体添加方法需要根据游戏UI系统调整
-    if GameMain.UI then
-        GameMain.UI:AddChild(self.resetButton)
-    end
-end
-
--- 重置已标记的NPC函数
-function KeZhan:ResetMarkedNPCs()
-    -- 清空已标记的NPC表
-    OldID = {}
-    
-    -- 重置所有客栈房间状态
-    for i = 1, #NPCING do
-        NPCING[i] = 0
-    end
-    
-    -- 显示重置成功消息
-    self:ShowMessage("已重置所有标记的NPC，客栈房间已清空！")
-    
-    -- 打印日志（可选）
-    print("[KeZhan Mod] 已重置所有标记的NPC和客栈房间状态")
 end
 
 -- 显示消息函数
@@ -83,12 +37,6 @@ end
 function KeZhan:OnLeave()
     -- 注销秘境更新事件
     tbEvent:UnRegisterEvent(g_emEvent.SecretUpdate, "KeZhan")
-    
-    -- 清理重置按钮
-    if self.resetButton then
-        self.resetButton:Destroy()
-        self.resetButton = nil
-    end
 end
 
 -- 秘境更新事件处理函数
